@@ -1,2 +1,1 @@
-tar -zcvf RemoteTools.tar.gz Navicat SSH
-
+tar -zcvf RemoteTools.tar.gz Navicat SSH WinSCP
