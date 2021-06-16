@@ -9,6 +9,7 @@ if [[ "$CONN_TYPE" == "" ]]; then
   read -p '[+] Choose connection type:
 - [1] SSH
 - [2] WinSCP
+- [3] Navicat
 Default[1]: ' CONN_TYPE
 fi
 
@@ -40,6 +41,8 @@ if [[ "$CONN_TYPE" == "2" ]]; then
     PASSWORD_FLAG="-privatekey="$(${WINEPATH_EXE} ${PPK_KEY_FILE})
   fi
   $WINE_EXE ../WinSCP/WinSCP.exe $PASSWORD_FLAG sftp://${REMOTE_SERVER_USERNAME}:${REMOTE_SERVER_PASSWORD}@${REMOTE_SERVER_HOST}:${REMOTE_SERVER_PORT} /sessionname="${REMOTE_SERVER_NAME}"
+elif [[ "$CONN_TYPE" == "3" ]]; then
+	
 else
   SSH_APPEND_FLAGS="-XY -o ServerAliveInterval=30 ${REMOTE_SERVER_USERNAME}@${REMOTE_SERVER_HOST} -p ${REMOTE_SERVER_PORT}"
 

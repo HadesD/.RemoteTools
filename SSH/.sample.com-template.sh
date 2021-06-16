@@ -5,4 +5,4 @@ REMOTE_SERVER_PORT=22
 REMOTE_SERVER_USERNAME=root
 REMOTE_SERVER_PASSWORD=''
 
-source ./templates/exec-remote.sh
+source .RemoteTools/templates/exec-remote.sh
