@@ -40,9 +40,9 @@ if [[ "$CONN_TYPE" == "2" ]]; then
   if [ -f "${PPK_KEY_FILE}" ]; then
     PASSWORD_FLAG="-privatekey="$(${WINEPATH_EXE} ${PPK_KEY_FILE})
   fi
-  $WINE_EXE ../.RemoteTools/WinSCP/WinSCP.exe $PASSWORD_FLAG sftp://${REMOTE_SERVER_USERNAME}:${REMOTE_SERVER_PASSWORD}@${REMOTE_SERVER_HOST}:${REMOTE_SERVER_PORT} /sessionname="${REMOTE_SERVER_NAME}"
+  $WINE_EXE ../.RemoteTools/WinSCP/WinSCP.exe $PASSWORD_FLAG sftp://${REMOTE_SERVER_USERNAME}:${REMOTE_SERVER_PASSWORD}@${REMOTE_SERVER_HOST}:${REMOTE_SERVER_PORT} -sessionname="${REMOTE_SERVER_NAME}"
 elif [[ "$CONN_TYPE" == "3" ]]; then
-	../.RemoteTools/Navicat/navicat.exe
+    start ../.RemoteTools/Navicat/navicat.exe
 else
   SSH_APPEND_FLAGS="-XY -o ServerAliveInterval=30 ${REMOTE_SERVER_USERNAME}@${REMOTE_SERVER_HOST} -p ${REMOTE_SERVER_PORT}"
 
