@@ -12,7 +12,7 @@ Default[*]: ' ACTION_OPT
 case $ACTION_OPT in
   1)
     echo '!!! Please keep this window open. Only close the WinSCP window !!!'
-    cp WinSCP/WinSCP.ini .RemoteTools/WinSCP.ini
+    cp WinSCP/WinSCP.ini .RemoteTools/WinSCP/WinSCP.ini
     .RemoteTools/WinSCP/WinSCP.exe
     cp .RemoteTools/WinSCP.ini WinSCP/WinSCP.ini
     ;;
