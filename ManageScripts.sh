@@ -22,10 +22,10 @@ case $ACTION_OPT in
     ;;
 
   3)
-    git pull
-    git submodule update --init --recursive
-    git submodule foreach git checkout master
-    git submodule foreach git pull
+	git submodule foreach git checkout .
+	git submodule foreach git checkout master
+	git submodule foreach git pull
+	git pull
     ;;
 
   4)
