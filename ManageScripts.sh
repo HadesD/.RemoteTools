@@ -47,4 +47,3 @@ case $ACTION_OPT in
     bash $SSH_TARGET_FILE_NAME
     ;;
 esac
-
