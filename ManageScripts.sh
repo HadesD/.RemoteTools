@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p '[+] Choose Action (Exit=CTRL+D):
+read -p '[+] Choose Action (Exit=CTRL+C):
 - [*] SSH Remote
 - [1] WinSCP Stand-Alone
 - [2] Update (with git pull)

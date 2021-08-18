@@ -6,7 +6,7 @@ REMOTE_SERVER_NAME=${_SELF/".sh"/""}
 SSH_KEY_FILE="../Keys/${REMOTE_SERVER_NAME}.pem"
 
 if [[ "$CONN_TYPE" == "" ]]; then
-  read -p '[+] Choose connection type (Exit=CTRL+D):
+  read -p '[+] Choose connection type (Exit=CTRL+C):
 - [*] SSH
 - [1] WinSCP
 - [2] Navicat
