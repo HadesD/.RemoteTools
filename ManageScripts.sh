@@ -18,7 +18,7 @@ case $ACTION_OPT in
     ;;
 
   2)
-    start .RemoteTools/navicat.exe
+    start .RemoteTools/Navicat/navicat.exe
     ;;
 
   3)
