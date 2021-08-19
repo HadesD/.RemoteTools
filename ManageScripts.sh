@@ -18,7 +18,8 @@ case $ACTION_OPT in
     ;;
 
   2)
-    start .RemoteTools/Navicat/navicat.exe
+    cd SSH
+    start ../.RemoteTools/Navicat/navicat.exe
     ;;
 
   3)
