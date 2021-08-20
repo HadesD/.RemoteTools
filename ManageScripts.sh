@@ -7,6 +7,7 @@ read -p '[+] Choose Action (Exit=CTRL+C):
 - [3] Update (with git pull)
 - [4] git push
 - [5] Install
+- [6] Create new SSH
 Default[*]: ' ACTION_OPT
 
 case $ACTION_OPT in
@@ -44,6 +45,23 @@ case $ACTION_OPT in
     curl -L https://github.com/HadesD/.RemoteTools/releases/download/latest/RemoteTools.tar.gz --output RemoteTools.tar.gz
     tar -zxvf RemoteTools.tar.gz -C ./.RemoteTools/
     rm -f RemoteTools.tar.gz
+    ;;
+
+  6)
+    read -p '[+] Enter SSH_SERVER_NAME: ' SSH_SERVER_NAME
+    read -p '[+] Enter REMOTE_SERVER_HOST: ' REMOTE_SERVER_HOST
+    read -p '[+] Enter REMOTE_SERVER_PORT: ' REMOTE_SERVER_PORT
+    read -p '[+] Enter REMOTE_SERVER_USERNAME: ' REMOTE_SERVER_USERNAME
+    read -p '[+] Enter REMOTE_SERVER_PASSWORD: ' REMOTE_SERVER_PASSWORD
+    vim Keys/${SSH_SERVER_NAME}.pem
+    echo "#!/bin/bash
+
+REMOTE_SERVER_HOST=${REMOTE_SERVER_HOST}
+REMOTE_SERVER_PORT=${REMOTE_SERVER_PORT}
+REMOTE_SERVER_USERNAME=${REMOTE_SERVER_USERNAME}
+REMOTE_SERVER_PASSWORD='${REMOTE_SERVER_PASSWORD}'
+
+source ../.RemoteTools/SSH/exec-remote.sh" >> SSH/${SSH_SERVER_NAME}.sh
     ;;
 
   *)
