@@ -9,6 +9,7 @@ main() {
 - [4] git push
 - [5] Install
 - [6] Create new SSH
+- [7] Forward Local Port
 Default[*]: ' ACTION_OPT
 
   case $ACTION_OPT in
@@ -67,6 +68,11 @@ REMOTE_SERVER_PASSWORD='${REMOTE_SERVER_PASSWORD}'
 
 source ../.RemoteTools/SSH/exec-remote.sh
 _EOF
+      ;;
+
+    7)
+      echo '[i] You need to update /etc/ssh/sshd_config:AllowTcpForwarding yes + GatewayPorts yes'
+      echo 'ssh -XY -o ServerAliveInterval=30 -R <REMOTE_PORT>:127.0.0.1:<LOCAL_RESOURCE_PORT> -R <REMOTE_PORT>:127.0.0.1:<LOCAL_RESOURCE_PORT> <REMOTE_USERNAME>@<REMOTE_HOST_NAME> -i <PERM_FILE>'
       ;;
 
     *)
