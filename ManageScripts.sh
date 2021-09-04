@@ -17,7 +17,7 @@ Default[*]: ' ACTION_OPT
       echo '!!! Please keep this window open. Only close the WinSCP window !!!'
       cp WinSCP/WinSCP.ini .RemoteTools/WinSCP/WinSCP.ini
       .RemoteTools/WinSCP/WinSCP.exe
-      cp .RemoteTools/WinSCP.ini WinSCP/WinSCP.ini
+      cp .RemoteTools/WinSCP/WinSCP.ini WinSCP/WinSCP.ini
       ;;
 
     2)
