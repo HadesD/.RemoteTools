@@ -79,7 +79,7 @@ _EOF
       cd SSH
       ls -Al *.sh
       read -p '[+] Enter FileName: ' SSH_TARGET_FILE_NAME
-      if [[ "${SSH_TARGET_FILE_NAME}" != "" ]]; then
+      if [ -f "${SSH_TARGET_FILE_NAME}" ]; then
         bash $SSH_TARGET_FILE_NAME
       else
         echo '(exit)'

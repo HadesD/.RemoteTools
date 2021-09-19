@@ -33,10 +33,8 @@ case $CONN_TYPE in
       WINE_EXE_WINSCP_KEYGEN=$WINE_EXE
     fi
 
-    if [ ! -f "${PPK_KEY_FILE}" ]; then
-      if [ -f "$SSH_KEY_FILE" ]; then
-        $WINE_EXE_WINSCP_KEYGEN ../.RemoteTools/WinSCP/WinSCP.com /keygen: "$(${WINEPATH_EXE} ${SSH_KEY_FILE})" -o "$(${WINEPATH_EXE} ${PPK_KEY_FILE})"
-      fi
+    if [ -f "$SSH_KEY_FILE" ]; then
+      $WINE_EXE_WINSCP_KEYGEN ../.RemoteTools/WinSCP/WinSCP.com /keygen: "$(${WINEPATH_EXE} ${SSH_KEY_FILE})" -o "$(${WINEPATH_EXE} ${PPK_KEY_FILE})"
     fi
     if [ -f "${PPK_KEY_FILE}" ]; then
       PASSWORD_FLAG="-privatekey="$(${WINEPATH_EXE} ${PPK_KEY_FILE})
