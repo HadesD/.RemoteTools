@@ -12,6 +12,8 @@ main() {
 - [7] Forward Local Port
 Default[*]: ' ACTION_OPT
 
+  clear
+
   case $ACTION_OPT in
     1)
       echo '!!! Please keep this window open. Only close the WinSCP window !!!'
