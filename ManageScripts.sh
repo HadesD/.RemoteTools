@@ -60,7 +60,7 @@ Default[*]: ' ACTION_OPT
       read -p '[+] Enter REMOTE_SERVER_USERNAME: ' REMOTE_SERVER_USERNAME
       read -p '[+] Enter REMOTE_SERVER_PASSWORD: ' REMOTE_SERVER_PASSWORD
       vim Keys/${SSH_SERVER_NAME}.pem
-      cat > SSH/${SSH_SERVER_NAME}.sh <<'_EOF'
+      cat > SSH/${SSH_SERVER_NAME}.sh <<_EOF
 #!/bin/bash
 
 REMOTE_SERVER_HOST=${REMOTE_SERVER_HOST}
