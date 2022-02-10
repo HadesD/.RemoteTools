@@ -79,10 +79,14 @@ _EOF
 
     *)
       cd SSH
-      ls -Al *.sh
-      read -p '[+] Enter FileName: ' SSH_TARGET_FILE_NAME
-      if [[ -f "${SSH_TARGET_FILE_NAME}" ]]; then
-        bash $SSH_TARGET_FILE_NAME
+      if [[ -f ssh-new.sh ]]; then
+	    bash ssh-new.sh
+      else
+    	  ls -Al *.sh
+    	  read -p '[+] Enter FileName: ' SSH_TARGET_FILE_NAME
+    	  if [[ -f "${SSH_TARGET_FILE_NAME}" ]]; then
+    		bash $SSH_TARGET_FILE_NAME
+    	  fi
       fi
       cd ..
       ;;
