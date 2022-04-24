@@ -1,5 +1,18 @@
 #!/bin/bash
 
+cecho(){
+    RED="\033[0;31m"
+    GREEN="\033[0;32m"
+    YELLOW="\033[1;33m"
+    BLUE="\033[1;34m"
+    # ... ADD MORE COLORS
+    NC="\033[0m" # No Color
+    # ZSH
+    # printf "${(P)1}${2} ${NC}\n"
+    # Bash
+    printf "${!1}${2} ${NC}\n"
+}
+
 main() {
   read -p '[+] Choose Action (Exit=CTRL+C):
 - [*] SSH Remote
@@ -79,8 +92,40 @@ _EOF
 
     *)
       cd SSH
-      if [[ -f ssh-new.sh ]]; then
-	    bash ssh-new.sh
+      if [[ -f config ]]; then
+	    cecho 'YELLOW' '[!] Please select a Hostname from list bellow:'
+
+        grep -i 'Host [[:alnum:]]' config
+
+        while read -p '[+] Enter Host: ' SSH_TARGET_HOST; do
+          if [ "$SSH_TARGET_HOST" != "" ]; then
+            break;
+          fi
+        done
+
+        SSH_TARGET_LINE=$(grep -n '^Host '${SSH_TARGET_HOST}'$' config | awk '{print $1}' FS=':')
+        ((SSH_TARGET_STARTL = $SSH_TARGET_LINE + 1))
+        ((SSH_TARGET_ENDL = $SSH_TARGET_STARTL + 4))
+
+        SSH_TARGET_PORT=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'Port [[:digit:]]' | xargs echo -n | awk '{print $2}' FS=' ')
+
+        SSH_APPEND_FLAGS=''
+
+        cecho 'BLUE' "[i] Target Port: $SSH_TARGET_PORT"
+
+        if [ "$SSH_TARGET_PORT" != "22" ]; then
+          SSH_TARGET_PORT_PREFIX=$((${SSH_TARGET_PORT::-2}))
+          
+          if [[ ${SSH_TARGET_PORT_PREFIX} -ge 600 ]]; then
+            (( SSH_TARGET_PORT_PREFIX = SSH_TARGET_PORT_PREFIX / 2 ))
+          fi
+          SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}06:localhost:3306"
+          SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}22:localhost:22"
+
+          cecho 'BLUE' "[i] SSH_APPEND_FLAGS: $SSH_APPEND_FLAGS"
+        fi
+
+        ssh -F config $SSH_APPEND_FLAGS $SSH_TARGET_HOST
       else
     	  ls -Al *.sh
     	  read -p '[+] Enter FileName: ' SSH_TARGET_FILE_NAME
