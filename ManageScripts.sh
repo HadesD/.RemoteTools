@@ -97,35 +97,41 @@ _EOF
 
         grep -i 'Host [[:alnum:]]' config
 
-        while read -p '[+] Enter Host: ' SSH_TARGET_HOST; do
-          if [ "$SSH_TARGET_HOST" != "" ]; then
+        while read -p '[+] Enter Host: ' REMOTE_SERVER_NAME; do
+          if [ "$REMOTE_SERVER_NAME" != "" ]; then
             break;
           fi
         done
 
-        SSH_TARGET_LINE=$(grep -n '^Host '${SSH_TARGET_HOST}'$' config | awk '{print $1}' FS=':')
+        SSH_TARGET_LINE=$(grep -n '^Host '${REMOTE_SERVER_NAME}'$' config | awk '{print $1}' FS=':')
         ((SSH_TARGET_STARTL = $SSH_TARGET_LINE + 1))
         ((SSH_TARGET_ENDL = $SSH_TARGET_STARTL + 4))
 
-        SSH_TARGET_PORT=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'Port [[:digit:]]' | xargs echo -n | awk '{print $2}' FS=' ')
+        REMOTE_SERVER_PORT=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'Port [[:digit:]]' | xargs echo -n | awk '{print $2}' FS=' ')
+        REMOTE_SERVER_LOCAL_PORT=$REMOTE_SERVER_PORT
+        SSH_KEY_FILE=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'IdentityFile' | xargs echo -n | awk '{print $2}' FS=' ')
+        REMOTE_SERVER_USERNAME=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'User' | xargs echo -n | awk '{print $2}' FS=' ')
+        REMOTE_SERVER_HOST=localhost
 
-        SSH_APPEND_FLAGS=''
+        SSH_APPEND_FLAGS='-F config'
 
-        cecho 'BLUE' "[i] Target Port: $SSH_TARGET_PORT"
+        cecho 'BLUE' "[i] Target Port: $REMOTE_SERVER_PORT"
 
-        if [ "$SSH_TARGET_PORT" != "22" ]; then
-          SSH_TARGET_PORT_PREFIX=$((${SSH_TARGET_PORT::-2}))
+        if [ "$REMOTE_SERVER_PORT" != "22" ]; then
+          SSH_TARGET_PORT_PREFIX=$((${REMOTE_SERVER_PORT::-2}))
           
           if [[ ${SSH_TARGET_PORT_PREFIX} -ge 600 ]]; then
             (( SSH_TARGET_PORT_PREFIX = SSH_TARGET_PORT_PREFIX / 2 ))
           fi
           SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}06:localhost:3306"
           SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}22:localhost:22"
+          REMOTE_SERVER_LOCAL_PORT="${SSH_TARGET_PORT_PREFIX}22"
 
           cecho 'BLUE' "[i] SSH_APPEND_FLAGS: $SSH_APPEND_FLAGS"
         fi
 
-        ssh -F config $SSH_APPEND_FLAGS $SSH_TARGET_HOST
+        #ssh -F config $SSH_APPEND_FLAGS $REMOTE_SERVER_NAME
+        source ../.RemoteTools/SSH/exec-remote.sh
       else
     	  ls -Al *.sh
     	  read -p '[+] Enter FileName: ' SSH_TARGET_FILE_NAME
