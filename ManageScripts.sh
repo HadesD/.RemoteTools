@@ -126,9 +126,12 @@ _EOF
           SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}06:localhost:3306"
           SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${SSH_TARGET_PORT_PREFIX}22:localhost:22"
           REMOTE_SERVER_LOCAL_PORT="${SSH_TARGET_PORT_PREFIX}22"
-
-          cecho 'BLUE' "[i] SSH_APPEND_FLAGS: $SSH_APPEND_FLAGS"
+        else
+          REMOTE_SERVER_LOCAL_PORT="35022" # Just random >= 30k
+          SSH_APPEND_FLAGS="${SSH_APPEND_FLAGS} -L ${REMOTE_SERVER_LOCAL_PORT}:localhost:22"
         fi
+
+        cecho 'BLUE' "[i] SSH_APPEND_FLAGS: $SSH_APPEND_FLAGS"
 
         #ssh -F config $SSH_APPEND_FLAGS $REMOTE_SERVER_NAME
         source ../.RemoteTools/SSH/exec-remote.sh

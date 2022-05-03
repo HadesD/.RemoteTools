@@ -2,7 +2,7 @@
 
 #_SELF="${0##*/}"
 #_SELF=$(basename "$0")
-SSH_KEY_FILE="../Keys/${REMOTE_SERVER_NAME}.pem"
+#SSH_KEY_FILE="../Keys/${REMOTE_SERVER_NAME}.pem"
 
 read -p '[+] Choose connection type (Exit=CTRL+C):
 - [*] SSH
@@ -17,7 +17,7 @@ echo "[+] Connecting to [${REMOTE_SERVER_USERNAME} : ${REMOTE_SERVER_PASSWORD} @
 
 case $CONN_TYPE in
   1)
-    PPK_KEY_FILE="../Keys/${REMOTE_SERVER_NAME}.ppk"
+    PPK_KEY_FILE="${SSH_KEY_FILE}.ppk"
     PASSWORD_FLAG="-password=\"$REMOTE_SERVER_PASSWORD\""
     WINE_EXE=start
     WINEPATH_EXE=echo
@@ -34,6 +34,7 @@ case $CONN_TYPE in
     fi
     if [ -f "${PPK_KEY_FILE}" ]; then
       PASSWORD_FLAG="-privatekey="$(${WINEPATH_EXE} ${PPK_KEY_FILE})
+      echo $PASSWORD_FLAG
     fi
     $WINE_EXE ../.RemoteTools/WinSCP/WinSCP.exe $PASSWORD_FLAG sftp://${REMOTE_SERVER_USERNAME}:${REMOTE_SERVER_PASSWORD}@${REMOTE_SERVER_HOST}:${REMOTE_SERVER_LOCAL_PORT} -sessionname="${REMOTE_SERVER_NAME}"
     ;;
