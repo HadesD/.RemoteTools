@@ -5,7 +5,7 @@
 #SSH_KEY_FILE="../Keys/${REMOTE_SERVER_NAME}.pem"
 
 read -p '[+] Choose connection type (Exit=CTRL+C):
-- [*] SSH
+- [*] SSH (https://superuser.com/questions/1579346/many-excludedportranges-how-to-delete-hyper-v-is-disabled)
 - [1] WinSCP
 - [2] Navicat
 Default[*]: ' CONN_TYPE
