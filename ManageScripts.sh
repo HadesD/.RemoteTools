@@ -95,7 +95,7 @@ _EOF
       if [[ -f config ]]; then
 	    cecho 'YELLOW' '[!] Please select a Hostname from list bellow:'
 
-        grep -i 'Host [[:alnum:]]' config
+        grep -ni 'Host [[:alnum:]]' config
 
         while read -p '[+] Enter Host: ' REMOTE_SERVER_NAME; do
           if [ "$REMOTE_SERVER_NAME" != "" ]; then
