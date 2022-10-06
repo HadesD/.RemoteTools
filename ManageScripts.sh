@@ -97,13 +97,19 @@ _EOF
 
         grep -ni 'Host [[:alnum:]]' config
 
-        while read -p '[+] Enter Host: ' REMOTE_SERVER_NAME; do
-          if [ "$REMOTE_SERVER_NAME" != "" ]; then
+        while read -p '[+] Enter Host: ' REMOTE_HOST_SELECT; do
+          if [ "$REMOTE_HOST_SELECT" != "" ]; then
             break;
           fi
         done
 
-        SSH_TARGET_LINE=$(grep -n '^Host '${REMOTE_SERVER_NAME}'$' config | awk '{print $1}' FS=':')
+        if [[ $REMOTE_HOST_SELECT =~ ^[0-9]+$ ]]; then
+            SSH_TARGET_LINE=$(( $REMOTE_HOST_SELECT ))
+            REMOTE_SERVER_NAME=$(sed -n $SSH_TARGET_LINE'p' config | grep 'Host' | xargs echo -n | awk '{print $2}' FS=' ')
+        else
+            SSH_TARGET_LINE=$(grep -n '^Host '${REMOTE_HOST_SELECT}'$' config | awk '{print $1}' FS=':')
+            REMOTE_SERVER_NAME=$REMOTE_HOST_SELECT
+        fi
         ((SSH_TARGET_STARTL = $SSH_TARGET_LINE + 1))
         ((SSH_TARGET_ENDL = $SSH_TARGET_STARTL + 4))
 
