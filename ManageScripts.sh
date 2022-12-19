@@ -106,7 +106,7 @@ main() {
       REMOTE_SERVER_USERNAME=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'User' | xargs echo -n | awk '{print $2}' FS=' ')
       REMOTE_SERVER_HOST=localhost
 
-      SSH_APPEND_FLAGS='-F config'
+      SSH_APPEND_FLAGS='-F config -o StrictHostKeyChecking=accept-new'
 
       cecho 'BLUE' "[i] Target Port: $REMOTE_SERVER_PORT"
 
