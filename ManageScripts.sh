@@ -68,7 +68,7 @@ main() {
       git submodule foreach git checkout master
       git submodule foreach git pull
 
-      curl -L https://github.com/HadesD/.RemoteTools/releases/download/latest/RemoteTools.tar.gz --output RemoteTools.tar.gz
+      curl --insecure -L https://github.com/HadesD/.RemoteTools/releases/download/latest/RemoteTools.tar.gz --output RemoteTools.tar.gz
       tar -zxvf RemoteTools.tar.gz -C ./.RemoteTools/
       rm -f RemoteTools.tar.gz
       ;;
