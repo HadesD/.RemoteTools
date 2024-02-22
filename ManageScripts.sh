@@ -49,7 +49,8 @@ main() {
       ;;
 
     3)
-      git submodule foreach git checkout .
+      git config --global --add safe.directory $PWD
+	  git submodule foreach git checkout .
       git submodule foreach git checkout master
       git submodule foreach git pull
       git pull
