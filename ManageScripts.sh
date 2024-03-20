@@ -50,7 +50,7 @@ main() {
 
     3)
       git config --global --add safe.directory $PWD
-	  git submodule foreach git checkout .
+      git submodule foreach git checkout .
       git submodule foreach git checkout master
       git submodule foreach git pull
       git pull
@@ -92,11 +92,11 @@ main() {
       done
 
       if [[ $REMOTE_HOST_SELECT =~ ^[0-9]+$ ]]; then
-          REMOTE_SERVER_NAME=$(sed -n $SSH_TARGET_LINE'p' config | grep 'Host' | xargs echo -n | awk '{print $2}' FS=' ')
+          REMOTE_SERVER_NAME=$(sed -n $REMOTE_HOST_SELECT'p' config | grep 'Host' | xargs echo -n | awk '{print $2}' FS=' ')
       else
           REMOTE_SERVER_NAME=$REMOTE_HOST_SELECT
       fi
-	  SSH_CONFIG_SERVER_DATA=$(ssh -F config -G $REMOTE_SERVER_NAME)
+      SSH_CONFIG_SERVER_DATA=$(ssh -F config -G $REMOTE_SERVER_NAME)
 
       REMOTE_SERVER_PORT=$(grep '^port ' <<< $SSH_CONFIG_SERVER_DATA | awk '{print $2}')
       REMOTE_SERVER_LOCAL_PORT=$REMOTE_SERVER_PORT
