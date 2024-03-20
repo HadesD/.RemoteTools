@@ -92,19 +92,16 @@ main() {
       done
 
       if [[ $REMOTE_HOST_SELECT =~ ^[0-9]+$ ]]; then
-          SSH_TARGET_LINE=$(( $REMOTE_HOST_SELECT ))
           REMOTE_SERVER_NAME=$(sed -n $SSH_TARGET_LINE'p' config | grep 'Host' | xargs echo -n | awk '{print $2}' FS=' ')
       else
-          SSH_TARGET_LINE=$(grep -n '^Host '${REMOTE_HOST_SELECT}'$' config | awk '{print $1}' FS=':')
           REMOTE_SERVER_NAME=$REMOTE_HOST_SELECT
       fi
-      ((SSH_TARGET_STARTL = $SSH_TARGET_LINE + 1))
-      ((SSH_TARGET_ENDL = $SSH_TARGET_STARTL + 4))
+	  SSH_CONFIG_SERVER_DATA=$(ssh -F config -G $REMOTE_SERVER_NAME)
 
-      REMOTE_SERVER_PORT=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'Port [[:digit:]]' | xargs echo -n | awk '{print $2}' FS=' ')
+      REMOTE_SERVER_PORT=$(grep '^port ' <<< $SSH_CONFIG_SERVER_DATA | awk '{print $2}')
       REMOTE_SERVER_LOCAL_PORT=$REMOTE_SERVER_PORT
-      SSH_KEY_FILE=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'IdentityFile' | xargs echo -n | awk '{print $2}' FS=' ')
-      REMOTE_SERVER_USERNAME=$(sed -n $SSH_TARGET_STARTL','$SSH_TARGET_ENDL'p' config | grep 'User' | xargs echo -n | awk '{print $2}' FS=' ')
+      SSH_KEY_FILE=$(grep '^identityfile ' <<< $SSH_CONFIG_SERVER_DATA | awk '{print $2}')
+      REMOTE_SERVER_USERNAME=$(grep '^user ' <<< $SSH_CONFIG_SERVER_DATA | awk '{print $2}')
       REMOTE_SERVER_HOST=localhost
 
       SSH_APPEND_FLAGS='-F config -o StrictHostKeyChecking=accept-new'
