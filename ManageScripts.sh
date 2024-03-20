@@ -129,7 +129,7 @@ main() {
 
       read -p "${MSG_CONN_TYPE}" CONN_TYPE
 
-      echo "[+] Connecting to [${REMOTE_SERVER_USERNAME} : ${REMOTE_SERVER_PASSWORD} @ ${REMOTE_SERVER_HOST} : ${REMOTE_SERVER_LOCAL_PORT}]..."
+      echo "[+] Connecting to [${REMOTE_SERVER_USERNAME}@${REMOTE_SERVER_NAME} (${REMOTE_SERVER_HOST}:${REMOTE_SERVER_LOCAL_PORT})]..."
       
       case $CONN_TYPE in
         1)
