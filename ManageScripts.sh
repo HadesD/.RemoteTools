@@ -104,7 +104,7 @@ main() {
       REMOTE_SERVER_USERNAME=$(grep '^user ' <<< $SSH_CONFIG_SERVER_DATA | awk '{print $2}')
       REMOTE_SERVER_HOST=localhost
 
-      SSH_APPEND_FLAGS='-F config -o StrictHostKeyChecking=accept-new'
+      SSH_APPEND_FLAGS='-F config -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
       cecho 'BLUE' "[i] Target Port: $REMOTE_SERVER_PORT"
 
